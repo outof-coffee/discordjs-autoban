@@ -2,42 +2,6 @@
 
 A specialized Discord bot designed to combat spam by immediately banning anyone who posts in a monitored channel, unless they are the guild owner or have a specific administrative role.
 
-## Core Features
-
-- **Automated Anti-Spam**: Monitors a single specified channel and bans unauthorized users (including other bots) upon their first message.
-- **Fail-Safe Mechanism**: The bot defaults to an "off" state when joining a guild to prevent accidental mass-bans.
-- **Recent Ban History**: Tracks the last 10 auto-bans per guild, viewable via command.
-- **Quick Unban**: Allows administrators to unban users caught by the system by their User ID or their index in the recent bans list.
-- **Synchronous JSON Storage**: Uses `lowdb` for simple, lightweight, per-guild configuration.
-- **Restricted Access**: All management commands are limited to the Guild Owner and members with a configurable admin role.
-
-## Architecture & Design
-
-This bot is built with **simplicity** and **modularity** as its primary goals. It avoids over-engineered frameworks in favor of straightforward, type-safe TypeScript implementation.
-
-### Key Components
-
-- **`src/models/GuildConfig.ts`**: A wrapper class that encapsulates the auto-ban logic (`shouldBan`). This provides a single point of truth for whether a message author should be banned.
-- **`src/utils/db.ts`**: A synchronous API for loading and saving guild settings using `lowdb` with lazy initialization and test isolation.
-- **`src/utils/interactions.ts`**: A utility for consistent, ephemeral error reporting during command execution.
-- **`src/events/messageCreate.ts`**: The core listener that executes the auto-ban logic.
-- **`src/commands/autoban.ts`**: A unified command structure for managing the bot's configuration, status, and ban history.
-
-## Quality Assurance
-
-The project maintains high reliability through a comprehensive unit test suite powered by **Vitest**.
-
-### Testing Strategy
-
-- **Unit Testing**: Focuses on custom logic in isolation (Models, Utils, Handlers, Events, and Commands).
-- **Mocking**: Utilizes `vi.mock` to simulate Discord.js objects and environment side-effects (File System, Database).
-- **Clean Architecture**: Code is refactored for testability, avoiding global state and using lazy initialization for database access.
-
-### Running Tests
-
-- **Run all tests**: `npm run test`
-- **Build verification**: `npm run build` (Ensures type safety and excludes testing artifacts from the production `dist/` folder).
-
 ## Getting Started
 
 ### Prerequisites
@@ -48,7 +12,7 @@ The project maintains high reliability through a comprehensive unit test suite p
 ### Installation
 
 1. Clone the repository and navigate to the project root.
-2. Copy `.env.example` to `.env` and fill in your credentials:
+2. Copy `example.env` to `.env` and fill in your credentials:
    ```env
    DISCORD_TOKEN=your_token_here
    CLIENT_ID=your_client_id_here
